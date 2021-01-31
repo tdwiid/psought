@@ -3,19 +3,19 @@ package main
 import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/xorm"
+	"xorm.io/xorm"
 	"log"
 )
 
 // Define the structure (xorm supports bidirectional mapping)
 
 type User struct {
-	Name string `json:"name" xorm:"not null pk default '' VARCHAR(82)"`
+	Name      string `json:"name"   xorm:"not null pk default '' VARCHAR(82)"`
 	Password  string `json:"passwd" xorm:"not null default '' VARCHAR(32)"`
-	Email   string `json:"email" xorm:"not null default '' VARCHAR(32)"`
+	Email     string `json:"email"  xorm:"not null default '' VARCHAR(32)"`
 }
 // Define the orm engine
-var engine  *xorm.Engine
+var engine *xorm.Engine
 
 
 
@@ -41,7 +41,7 @@ func main(){
 	update("123456","123456","1234567")
 }
 
-func Install (name,passwd,email string){
+func Install(name,passwd,email string){
 	str1 := new(User)
 	str1.Name = name
 	str1.Password = passwd
@@ -54,7 +54,7 @@ func Install (name,passwd,email string){
 
 }
 
-func Find (name string) {
+func Find(name string) {
 	a := new(User)
 	str, err := engine.ID(name).Get(a)
 	if err != nil {
@@ -65,7 +65,7 @@ func Find (name string) {
 
 }
 
-func update (name,oldpwd,newpwd string) {
+func update(name,oldpwd,newpwd string) {
 	a := new(User)
 	str, err := engine.ID(name).Get(a)
 	if err != nil {
